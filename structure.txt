@@ -1,0 +1,48 @@
+📂 Agentic_AI_Workflow/
+│── 📜 README.md
+│── 📜 requirements.txt 
+│── 📜 .gitignore
+│
+│── 📂 data/
+│   ├── 📂 raw/
+│   │   ├── videos  
+│   │   ├── images
+│   │   ├── documents ...    
+│   ├── 📂 processed/
+│   │   ├── videos 
+│   │   ├── images
+│   │   ├── documents ...
+│
+│── 📂 models/
+│   ├── 📂 state_of_the_art/ ...
+│   ├── 📂 fine_tunes/ ...
+│
+│── 📂 src/
+│   ├── 📂 components/ 
+│   │   ├── component_1  
+│   │   ├── component_2 
+│   │   ├── component_3 ...
+│   │
+│   ├── 📂 workflows/ 
+│   │   ├── workflow_1  
+│   │   ├── workflow_2 
+│   │   ├── workflow_3 ...
+│   │
+│   ├── 📂 notebooks/ 
+│   │   ├── notebook_1  
+│   │   ├── notebook_2 
+│   │   ├── notebook_3 ...
+│   │
+├── 📂 logs/
+│   ├── 📜 logs.log
+│
+├── 📂 temp/
+│   ├── 📜 test_py.py
+│   ├── 📜 test_nb.ipynb
+│   ├── 📜 test_workflow.py
+│
+├── 📂 streamlit/ (testing) ...
+│
+├── 📂 frontend/ ...
+│
+└── 📂 backend/ ...
