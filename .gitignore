@@ -1,5 +1,12 @@
 # Local
 to_do.txt
+data/raw/documents
+data/raw/videos
+data/raw/images
+
+data/processed/documents
+data/processed/videos
+data/processed/images
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
