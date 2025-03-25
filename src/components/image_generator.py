@@ -31,6 +31,8 @@ def construct_image_gen_prompt(content, additional_info=None):
             model='gemini-2.0-flash-lite',
             contents=gemini_prompt
         )
+        # print(response)
+        # print(response.candidates[0].content.parts[0].text)
         return response.candidates[0].content.parts[0].text
     except Exception as e:
         print(e)
@@ -75,8 +77,16 @@ def generate_image_with_gemini(content, additional_info=None):
                 print(part.text)
             elif part.inline_data is not None:
                 image = Image.open(BytesIO((part.inline_data.data)))
-                image.save(f'gemini-native-image-{random.random()}.png')
+
+                img_bytes_io = BytesIO()
+                image.save(img_bytes_io, format="PNG")
+                img_bytes = img_bytes_io.getvalue()
+
+                img_save_path = f'gemini-native-image-{random.random()}.png'
+                image.save(img_save_path)
                 image.show()
+                return {"img_path": img_save_path,
+                        "img_bytes":img_bytes}
     except Exception as e:
         print(e)
         return -1
