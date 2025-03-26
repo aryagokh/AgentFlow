@@ -7,7 +7,7 @@ import uvicorn
 app = FastAPI()
 
 @app.post('/Recipe and Budget Generator/')
-async def food_and_budget_generator(dish, role='Chef', additional_info=None, email=None, location='India'):
+async def food_and_budget_generator(dish, role='Chef', additional_info=None, email=None, location='India', websites=None):
     if additional_info is not None:
         additional_info = additional_info + f'''The recipe and prices should be according to {location}.'''
     else:
@@ -17,7 +17,7 @@ async def food_and_budget_generator(dish, role='Chef', additional_info=None, ema
         content = jsoned_output['content']
         items = jsoned_output['items']
         if items not in (None, [], {}, {''}):
-            real_time_prices = generate_realtime_parsed_price(items, additional_info=additional_info)
+            real_time_prices = generate_realtime_parsed_price(items, additional_info=additional_info, website=websites)
             if email is not None:
                 handle_mail(mail_content=jsoned_output, to=email, additional_info='The provided information is json format of recipe and its ingredients required with price.')
             return {
