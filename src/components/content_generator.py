@@ -6,13 +6,13 @@ from typing import List, Dict
 import json
 load_dotenv()
 
-class Item(BaseModel):
-    item: str
-    quantity: str
+# class Item(BaseModel):
+#     item: str
+#     quantity: str
 
-class RecipeResponse(BaseModel):
-    content: str
-    items: List[Item]
+# class RecipeResponse(BaseModel):
+#     content: str
+#     items: List[Item]
 
 
 def create_content_generation_prompt(role, work, additional_info=None):
