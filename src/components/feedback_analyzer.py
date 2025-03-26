@@ -2,9 +2,10 @@ import pandas as pd
 import google.genai as genai
 from dotenv import load_dotenv
 import os
+from config import get_secret
 load_dotenv()
 
-client = genai.Client(api_key=os.getenv('GEMINI_API_KEY'))
+client = genai.Client(api_key=get_secret('GEMINI_API_KEY'))
 
 def file_to_text(file_path, review_column_name='reviews'):
     if str(file_path).endswith('csv'):
@@ -41,7 +42,7 @@ def create_analysing_prompt(data, additional_info=None):
 def analyze_feedback(file_path, review_column_name='reviews', additional_info=None):
     try:
         collective_response = file_to_text(file_path)
-        client = genai.Client(api_key=os.getenv('GEMINI_API_KEY'))
+        client = genai.Client(api_key=get_secret('GEMINI_API_KEY'))
         response = client.models.generate_content(
             model='gemini-2.0-flash-lite',
             contents=create_analysing_prompt(collective_response)

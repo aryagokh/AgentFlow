@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 from pydantic import BaseModel
 from typing import List, Dict
 import json
+from config import get_secret
 load_dotenv()
 
 # class Item(BaseModel):
@@ -39,7 +40,7 @@ def create_content_generation_prompt(role, work, additional_info=None):
 
 def generate_content(role, work, additional_info=None):
     try:
-        client = genai.Client(api_key=os.getenv('GEMINI_API_KEY'))
+        client = genai.Client(api_key=get_secret('GEMINI_API_KEY'))
         response = client.models.generate_content(
             model='gemini-2.0-flash',
             contents=create_content_generation_prompt(role, work, additional_info)

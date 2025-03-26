@@ -2,10 +2,11 @@ import os
 import google.genai as genai
 from dotenv import load_dotenv
 from google.genai.types import Tool, GenerateContentConfig, GoogleSearch
+from config import get_secret
 
 load_dotenv()
 
-client = genai.Client(api_key=os.getenv('GEMINI_API_KEY'))
+client = genai.Client(api_key=get_secret('GEMINI_API_KEY'))
 google_search_tool = Tool(google_search = GoogleSearch())
 
 def construct_watchdog_prompt(content, goal, additional_info=None):
@@ -38,7 +39,7 @@ def construct_watchdog_prompt(content, goal, additional_info=None):
 def competitor_watchdog(content, goal, additional_info=None):
     try:
         prompt = construct_watchdog_prompt(content, goal, additional_info)
-        client = genai.Client(api_key=os.getenv('GEMINI_API_KEY'))
+        client = genai.Client(api_key=get_secret('GEMINI_API_KEY'))
         response = client.models.generate_content(
             model='gemini-2.0-flash',
             contents=prompt,

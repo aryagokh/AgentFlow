@@ -5,6 +5,7 @@ from langchain.agents import initialize_agent, AgentExecutor, AgentType
 from langchain.tools import Tool
 from langchain_google_genai import ChatGoogleGenerativeAI
 import os
+from config import get_secret
 load_dotenv()
 
 tavily_search = TavilySearchResults(max_results=5)
@@ -15,7 +16,7 @@ tools = [
 llm = ChatGoogleGenerativeAI(
     model='gemini-2.0-flash',
     max_retries=3,
-    api_key=os.getenv('GEMINI_API_KEY')
+    api_key=get_secret('GEMINI_API_KEY')
 )
 
 agent = initialize_agent(

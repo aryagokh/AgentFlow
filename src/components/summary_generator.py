@@ -2,6 +2,7 @@ import google.genai as genai
 import os
 import time
 from dotenv import load_dotenv
+from config import get_secret
 load_dotenv()
 
 def construct_summary_prompt(role, content, additional_details=None):
@@ -24,7 +25,7 @@ def construct_summary_prompt(role, content, additional_details=None):
 
 def summary_generator(role, content, additional_details=None):
     try:
-        client = genai.Client(api_key=os.getenv('GEMINI_API_KEY'))
+        client = genai.Client(api_key=get_secret('GEMINI_API_KEY'))
         prompt = construct_summary_prompt(role, content, additional_details=None)
         retries, max_retries, base_wait = 0, 5, 5
         while retries < max_retries:

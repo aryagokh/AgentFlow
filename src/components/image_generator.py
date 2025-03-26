@@ -8,10 +8,11 @@ from dotenv import load_dotenv
 from PIL import Image
 import matplotlib.pyplot as plt
 import random
+from config import get_secret
 load_dotenv()
 
 def construct_image_gen_prompt(content, additional_info=None):
-    client = genai.Client(api_key=os.getenv('GEMINI_API_KEY'))
+    client = genai.Client(api_key=get_secret('GEMINI_API_KEY'))
     gemini_prompt = f'''
     You are an expert prompt engineer who generates prompt based on the content and scenario.
     The following is the content based on which you have to make an optimized prompt which will be passed to an image generation model:
@@ -59,7 +60,7 @@ def generate_image_with_diffusionAI(content, additional_info=None):
     
 def generate_image_with_gemini(content, additional_info=None):
     try:
-        client = genai.Client(api_key=os.getenv('GEMINI_API_KEY'))
+        client = genai.Client(api_key=get_secret('GEMINI_API_KEY'))
 
         contents = (construct_image_gen_prompt(content, additional_info))
         # print("CONTENT", contents)

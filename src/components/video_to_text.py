@@ -2,9 +2,10 @@ import os
 import google.genai as genai
 import assemblyai as aai
 from dotenv import load_dotenv
+from config import get_secret
 load_dotenv()
 
-aai.settings.api_key = os.getenv('ASSEMBLYAI_API_KEY')
+aai.settings.api_key = get_secret('ASSEMBLYAI_API_KEY')
 
 def transcribe_the_video(video_path):
     try:

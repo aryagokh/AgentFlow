@@ -3,6 +3,7 @@ from openai import OpenAI
 import os
 from dotenv import load_dotenv
 from google.genai.types import GenerateContentConfig, Tool, GoogleSearch
+from config import get_secret
 load_dotenv()
 
 
@@ -26,7 +27,7 @@ def construct_post_generation_prompt(topic, platform, additional_info=None):
 def create_post(topic, platform, creativity_temperature=0.7, additional_info=None):
     try:
         prompt = construct_post_generation_prompt(topic, platform, additional_info)
-        client = genai.Client(api_key=os.getenv('GEMINI_API_KEY'))
+        client = genai.Client(api_key=get_secret('GEMINI_API_KEY'))
 
         google_search_tool = Tool(
             google_search=GoogleSearch()

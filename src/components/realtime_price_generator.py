@@ -3,6 +3,7 @@ from google.genai.types import Tool, GoogleSearch, GenerateContentConfig
 from dotenv import load_dotenv
 import os
 import json
+from config import get_secret
 load_dotenv()
 
 def create_price_generation_prompt(item, additional_info=None, website=None):
@@ -37,7 +38,7 @@ def create_price_generation_prompt(item, additional_info=None, website=None):
 
 def generate_price(item, addtional_info=None, website=None):
     try:
-        client = genai.Client(api_key=os.getenv('GEMINI_API_KEY'))
+        client = genai.Client(api_key=get_secret('GEMINI_API_KEY'))
         google_search_tool = Tool(
             google_search=GoogleSearch()
         )

@@ -1,11 +1,12 @@
 import os
 from dotenv import load_dotenv
 import google.genai as genai
+from config import get_secret
 load_dotenv()
 
 def audio_to_text(audio_file):
     try:
-        client = genai.Client(api_key=os.getenv('GEMINI_API_KEY'))
+        client = genai.Client(api_key=get_secret('GEMINI_API_KEY'))
         myfile = client.files.upload(file=audio_file)
         response = client.models.generate_content(
             model='gemini-2.0-flash',

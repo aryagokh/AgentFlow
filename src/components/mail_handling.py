@@ -4,6 +4,7 @@ import os
 import google.genai as genai
 from dotenv import load_dotenv
 import json
+from config import get_secret
 load_dotenv()
 
 def create_mail_prompt(mail_content, additional_info=None):
@@ -31,7 +32,7 @@ def create_mail_prompt(mail_content, additional_info=None):
 
 def create_mail(mail_content, additional_info=None):
     try:
-        client = genai.Client(api_key=os.getenv('GEMINI_API_KEY'))
+        client = genai.Client(api_key=get_secret('GEMINI_API_KEY'))
         prompt = create_mail_prompt(mail_content, additional_info)
         response = client.models.generate_content(
             model='gemini-2.0-flash-lite',
@@ -56,13 +57,13 @@ def create_mail(mail_content, additional_info=None):
 
 def send_mail(to, mail_content:json):
     try:
-        sender_email = os.getenv('GOOGLE_MAIL_SENDER')
-        password = os.getenv('GOOGLE_APP_PASSWORD')
+        sender_email = get_secret('GOOGLE_MAIL_SENDER')
+        password = get_secret('GOOGLE_APP_PASSWORD')
 
         msg =  MIMEText(mail_content['body'])
         subject = mail_content['subject']
         msg["Subject"] = subject
-        msg["From"] = os.getenv('GOOGLE_MAIL_SENDER')
+        msg["From"] = get_secret('GOOGLE_MAIL_SENDER')
         msg["To"] = to
         try:
             with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
