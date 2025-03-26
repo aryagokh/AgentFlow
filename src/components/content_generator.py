@@ -34,7 +34,6 @@ def create_content_generation_prompt(role, work, additional_info=None):
         Also, consider this additional details:
         {additional_info}.
         '''
-
     return prompt
 
 
@@ -45,7 +44,6 @@ def generate_content(role, work, additional_info=None):
             model='gemini-2.0-flash',
             contents=create_content_generation_prompt(role, work, additional_info)
         )
-        # print(response)
         # print(response.candidates[0].content.parts[0].text)
         return response.candidates[0].content.parts[0].text
     except Exception as e:
@@ -55,16 +53,32 @@ def generate_content(role, work, additional_info=None):
 
 def clean_json_output(raw_text):
     try:
-        if raw_text.startswith("```json"):
-            raw_text = raw_text.strip("```json").strip("```")
-        return json.loads(raw_text)
+        parsed_json = json.loads(raw_text.strip("```json"))
+        parsed_response = json.dumps(parsed_json, indent=4, ensure_ascii=False)
+        parsed_list_response = json.loads(parsed_response)
+        return parsed_list_response
     except json.JSONDecodeError as e:
         print(f"JSON Decoding Error: {e}")
         return -1
     
+def content_generator(role, work, additional_info=None):
+        retries, max_retries = 0, 5
+        if retries < max_retries:
+            try:
+                raw_content = generate_content(role, work, additional_info)
+                parsed_content = clean_json_output(raw_content)
+                return parsed_content
+            except Exception as e:
+                retries = retries + 1
+                print(f"Exception occurred : {e}. Retrying...")
+        else:
+            print(f"Max retries exceeded. Please try after sometime...")
 
-# if __name__ == '__main__':
-#     raw_content = generate_content('Movie script writer', 'Moana 3', additional_info='Do not keep track of items needed.')
-#     parsed_content = clean_json_output(raw_content)
-#     print(parsed_content['content'])
-#     print(parsed_content['items'])
+
+if __name__ == '__main__':
+    jsoned_content = content_generator(
+        role='Gigachad',
+        work=f'''Motivate someone who is addicted to smoking.''',
+        # additional_info='Do not keep track of the items'
+    )
+    print(jsoned_content)
