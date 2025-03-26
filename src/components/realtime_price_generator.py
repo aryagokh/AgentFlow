@@ -2,6 +2,7 @@ import google.genai as genai
 from google.genai.types import Tool, GoogleSearch, GenerateContentConfig
 from dotenv import load_dotenv
 import os
+import json
 load_dotenv()
 
 def create_price_generation_prompt(item, additional_info=None, website=None):
@@ -51,6 +52,12 @@ def generate_price(item, addtional_info=None, website=None):
     )
     return response.candidates[0].content.parts[0].text
 
+# def parse_price_output(price_pseudo_json):
+#     parsed_json = json.loads(price_pseudo_json.strip("```json"))
+#     parsed_response = json.dumps(parsed_json, indent=4, ensure_ascii=False)
+#     parsed_list_response = json.loads(parsed_response)
+#     return parsed_list_response
+
 
 # if __name__ == '__main__':
 #     response = generate_price(
@@ -59,4 +66,4 @@ def generate_price(item, addtional_info=None, website=None):
 #         website=['zepto.com', 'blinkit.com']
 #     )
 
-#     print(response)
+#     print(parse_price_output(response))
