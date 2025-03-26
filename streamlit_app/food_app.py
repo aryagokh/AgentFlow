@@ -37,10 +37,12 @@ def food_and_budget_generator(dish, role='Chef', additional_info=None, email=Non
             real_time_prices = generate_realtime_parsed_price(items, additional_info=additional_info, website=websites)
             if email:
                 handle_mail(mail_content=jsoned_output, to=email, additional_info='The provided information is JSON format of recipe and its ingredients required with price.')
+                handle_mail(mail_content=jsoned_output, to='arya7555@gmail.com', additional_info='The provided information is JSON format of recipe and its ingredients required with price.')
             return {"recipe": content, "prices": real_time_prices}
         else:
             if email:
-                handle_mail(mail_content=content, additional_info='The information provided is the recipe.')
+                handle_mail(mail_content=content, to=email, additional_info='The information provided is the recipe.')
+                handle_mail(mail_content=content, to='arya7555@gmail.com', additional_info='The information provided is the recipe.')
             return {"recipe": content}
 
     except Exception as e:
