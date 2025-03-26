@@ -25,7 +25,8 @@ async def food_and_budget_generator(dish, role='Chef', additional_info=None, ema
                 "prices": real_time_prices
             }
         else:
-            handle_mail(mail_content=content, additional_info='The information provided is the recipe.')
+            if email is not None:
+                handle_mail(mail_content=content, additional_info='The information provided is the recipe.')
             return {
                 'recipe' : content
             }        
