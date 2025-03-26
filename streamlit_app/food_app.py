@@ -13,11 +13,11 @@ st.set_page_config(page_title="Recipe & Budget Generator", page_icon="🍽️")
 with st.sidebar:
     st.header("🔧 Input Options")
     dish = st.text_input("Enter Dish Name", "")
-    role = st.text_input("Enter Role (Eg. Chef, Street Vendor, etc)", "")
+    role = st.text_input("Enter Role (Eg. Chef, Street Vendor, etc)", "Chef")
     location = st.text_input("Location", "India")
-    additional_info = st.text_area("Additional Info (Optional)")
-    websites = st.text_area("Preferred Websites for Prices (Optional)")
-    email = st.text_input("Enter Email (Optional)")
+    additional_info = st.text_area("Additional Info (Optional) (Eg. Make it spicy, for 4 people)")
+    websites = st.text_area("Preferred Websites for Prices (Optional) (Eg. Zepto, Blinkit)")
+    email = st.text_input("Enter Email (Optional) (Get recipe and budget via mail)")
     
     generate_btn = st.button("Generate Recipe & Budget")
 
