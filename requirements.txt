@@ -124,7 +124,9 @@ pydeck==0.9.1
 pydub==0.25.1
 Pygments==2.19.1
 pyparsing==3.2.2
+pypdf2==3.0.1
 python-dateutil==2.9.0.post0
+python-docx==1.1.2
 python-dotenv==1.0.1
 python-multipart==0.0.20
 pytz==2025.1
