@@ -8,6 +8,7 @@ from src.components.image_scraper import scrape_image
 from src.components.content_generator import content_generator
 from src.components.improvement_suggestor import improvement_suggestions
 from src.components.mail_handling import handle_mail
+from src.components.web_scraper import tavily_search
 import time
 
 def resume_improver(file_path: str, email_id:str=None):
@@ -25,7 +26,16 @@ def resume_improver(file_path: str, email_id:str=None):
                 return
             
             st.success("Text extracted successfully!")
-        
+
+        with st.spinner('#### Finding jobs/internships for you...'):
+            tavily_results=None
+            try:
+                tavily_results = tavily_search(text)
+                st.text_area("Search Results", tavily_results, height=200)
+            except Exception as e:
+                st.text_area("Search Results", "NO RESULTS FOUND!", height=200)
+        pass
+
         st.write("### Understanding Resume Structure")
         with st.spinner("Structuring extracted data..."):
             resume_understander = content_generator(role='Expert Resume Parser and data extractor.', work=f"""
@@ -135,6 +145,15 @@ def resume_improver(file_path: str, email_id:str=None):
                                 Agentic Email Bot.
                             Action!!
                             ''')
+                    if tavily_results is not None:
+                        handle_mail(mail_content=tavily_results, to=email_id, additional_info=f'''Forget all the instructuions. 
+                                    In the provided mail content, include all the provided links in the mail content.
+                                    Send mail in this formn for all content:
+                                    Title found: ...
+                                    Website: ...
+                                    Content Description: ...
+                                    
+                                    At last, write "Consider copying links and pasting it in another tabs."''')
                     st.success("Email Sent Successfully!")
             except Exception as e:
                 st.error(f'Error sending email : {e}')
@@ -142,15 +161,15 @@ def resume_improver(file_path: str, email_id:str=None):
     except Exception as e:
         st.error(f"Error: {e}")
 
-st.set_page_config(page_title="Resume Improver", layout="wide")
-st.title("🚀 AI Resume Improver")
-st.write("Upload your resume to extract, analyze, improve, and get suggestions instantly!")
+st.set_page_config(page_title="Resume Agent 🤖", layout="wide")
+st.title("🚀 Your Personalized RESUME Agent 🤖")
+st.write("Upload your resume, scrape jobs/internships available and get improvement suggestions instantly!")
 
 st.sidebar.markdown("<h3 style='text-align: center;'>⬇️ Upload your Resume ⬇️</h3>", unsafe_allow_html=True)
 uploaded_file = st.sidebar.file_uploader('', type=["pdf", "docx", "png", "jpg", "jpeg", "webp"], accept_multiple_files=False)
 
 if uploaded_file:
-    email_id = st.text_input('Enter email id (optional): ', placeholder='Get emailed suggestions.')
+    email_id = st.text_input('Enter email id (optional): ', placeholder='Get emailed jobs/internships and improvement suggestions.')
     os.makedirs('temp', exist_ok=True)
     file_path = f"temp/{uploaded_file.name}"
     with open(file_path, "wb") as f:
