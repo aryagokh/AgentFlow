@@ -92,13 +92,19 @@ def resume_improver(file_path: str, email_id:str=None):
             {improvements_needed}
             """)
             st.success("Generation successful!")
-            op = improved_resume['content']
-            if improved_resume['content'].startswith("```"):
-                first_newline = improvements_needed.find("\n")  
-                last_newline = improvements_needed.rfind("\n") 
+            try:
+                op = improved_resume['content']
+                try:
+                    if improved_resume['content'].startswith("```"):
+                        first_newline = improvements_needed.find("\n")  
+                        last_newline = improvements_needed.rfind("\n") 
 
-                if first_newline != -1 and last_newline != -1 and first_newline < last_newline:
-                    op = improved_resume[first_newline + 1:last_newline] 
+                        if first_newline != -1 and last_newline != -1 and first_newline < last_newline:
+                            op = improved_resume[first_newline + 1:last_newline]
+                except Exception:
+                    pass
+            except:
+                pass
 
             st.text_area("Improvements : ", op, height=200)
         
