@@ -46,6 +46,8 @@ def create_mail(mail_content, additional_info=None):
             model='gemini-2.0-flash-lite',
             contents=[f'Extract only the body from the following. Add salutation. No additional information please and no fillers please: {response.candidates[0].content.parts[0].text}']
         )
+        print("Subject : ", subject.candidates[0].content.parts[0].text)
+        print("Body : ", body.candidates[0].content.parts[0].text)
         return {
             'subject': subject.candidates[0].content.parts[0].text,
             'body':body.candidates[0].content.parts[0].text

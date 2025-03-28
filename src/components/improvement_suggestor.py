@@ -51,6 +51,11 @@ def suggest_improvements(system_prompt, user_prompt):
         print(e)
         return -1
     
+def improvement_suggestions(background, issues, additional_info=None, whom=None):
+    system_prompt, user_prompt = create_improvement_suggestion_prompt(background, issues, additional_info, whom)
+    improvements_needed = suggest_improvements(system_prompt, user_prompt)
+    return improvements_needed
+
 
 if __name__ == '__main__':
     issues = f'''
