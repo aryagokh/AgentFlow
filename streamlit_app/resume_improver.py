@@ -102,7 +102,7 @@ def resume_improver(file_path: str, email_id:str=None):
 
             st.text_area("Improvements : ", op, height=200)
         
-        if email_id is None or email_id is '':
+        if email_id == None or email_id == '':
             return
         else:
             st.info(f"""⚠️ Email feature is still under development and is available for testing purposes currently.
