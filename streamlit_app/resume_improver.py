@@ -24,7 +24,7 @@ def resume_improver(file_path: str, email_id:str=None):
                 st.error("Unsupported file format! Please upload a valid resume format.")
                 return
             
-            st.success("Text Extracted Successfully!")
+            st.success("Text extracted successfully!")
         
         st.write("### Understanding Resume Structure")
         with st.spinner("Structuring extracted data..."):
@@ -79,7 +79,7 @@ def resume_improver(file_path: str, email_id:str=None):
                 ''',
                 whom='user'
             )
-            st.success("Improvements generation succeesssfull!")
+            st.success("Improvements generation successful!")
         
         st.write("### Generating Improved Resume")
         with st.spinner('Restructuring your resume, please wait....'):
