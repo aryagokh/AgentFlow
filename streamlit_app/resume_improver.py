@@ -45,7 +45,6 @@ def resume_improver(file_path: str, email_id:str=None):
                         """)
             st.success("Resume parsed successfully!")
             page_content = '\n'.join([f'{key}: {value}' for key, value in resume_understander['content'].items()])
-            # st.text_area("Extracted Resume Data", page_content, height=300)
         
         st.write("### Identifying Issues")
         with st.spinner('Identifying issues....'):
@@ -95,11 +94,11 @@ def resume_improver(file_path: str, email_id:str=None):
             st.success("Generation successful!")
             op = improved_resume['content']
             if improved_resume['content'].startswith("```"):
-                first_newline = improvements_needed.find("\n")  # Find first newline
-                last_newline = improvements_needed.rfind("\n")  # Find last newline
+                first_newline = improvements_needed.find("\n")  
+                last_newline = improvements_needed.rfind("\n") 
 
                 if first_newline != -1 and last_newline != -1 and first_newline < last_newline:
-                    op = improved_resume[first_newline + 1:last_newline]  # Extract content
+                    op = improved_resume[first_newline + 1:last_newline] 
 
             st.text_area("Improvements : ", op, height=200)
         
